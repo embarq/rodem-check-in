@@ -163,6 +163,7 @@ export const checkInAction = async () => {
     .select('id')
     .eq('user_id', user.id)
     .single()
+
   const recordsQuery = supabase
     .from('attendance')
     .select('id,user_profile_id,created_at', { count: 'exact' })
@@ -174,7 +175,7 @@ export const checkInAction = async () => {
   const records = await recordsQuery
 
   if (records.error) {
-    console.error(records.error)
+    console.error({...records.error, src: 'checkInAction/recordsQuery'})
     return encodedRedirect('error', '/member/check-in', 'An error occurred')
   }
 
@@ -182,18 +183,13 @@ export const checkInAction = async () => {
     return encodedRedirect('error', '/member/check-in', 'Already checked in')
   }
 
-  console.log('checkInAction', {
-    user_profile_id: profile?.id,
-    created_at: baseTs.toDate(),
-  })
-
   const { error } = await supabase.from('attendance').insert({
     user_profile_id: profile?.id,
     created_at: baseTs.toDate(),
   })
 
   if (error) {
-    console.error(error)
+    console.error({...error, src: 'checkInAction/attendanceQuery'})
     return encodedRedirect('error', '/member/check-in', 'An error occurred')
   }
 
