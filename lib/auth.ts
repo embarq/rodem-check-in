@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { UserProfile } from './model'
+import { profilesTableName } from './db'
 
 export type CompleteSignUpPayload = Pick<UserProfile, 'user_id'> &
   Partial<
@@ -11,7 +12,7 @@ export const completeSignUp = async (
 ): Promise<any> => {
   const supabase = await createClient()
 
-  return supabase.from('profiles').insert<CompleteSignUpPayload>(payload, {
+  return supabase.from(profilesTableName).insert<CompleteSignUpPayload>(payload, {
     count: 'estimated',
   })
 }

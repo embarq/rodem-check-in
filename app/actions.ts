@@ -6,6 +6,7 @@ import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import dayjs from 'dayjs'
 import dayjsPluginUtc from 'dayjs/plugin/utc'
+import { attendanceTableName, profilesTableName } from '@/lib/db'
 
 dayjs.extend(dayjsPluginUtc)
 
@@ -159,13 +160,13 @@ export const checkInAction = async () => {
   }
 
   const { data: profile } = await supabase
-    .from('profiles')
+    .from(profilesTableName)
     .select('id')
     .eq('user_id', user.id)
     .single()
 
   const recordsQuery = supabase
-    .from('attendance')
+    .from(attendanceTableName)
     .select('id,user_profile_id,created_at', { count: 'exact' })
     .eq('user_profile_id', profile?.id)
     .order('created_at', { ascending: false })
@@ -175,7 +176,7 @@ export const checkInAction = async () => {
   const records = await recordsQuery
 
   if (records.error) {
-    console.error({...records.error, src: 'checkInAction/recordsQuery'})
+    console.error({ ...records.error, src: 'checkInAction/recordsQuery' })
     return encodedRedirect('error', '/member/check-in', 'An error occurred')
   }
 
@@ -183,13 +184,13 @@ export const checkInAction = async () => {
     return encodedRedirect('error', '/member/check-in', 'Already checked in')
   }
 
-  const { error } = await supabase.from('attendance').insert({
+  const { error } = await supabase.from(attendanceTableName).insert({
     user_profile_id: profile?.id,
     created_at: baseTs.toDate(),
   })
 
   if (error) {
-    console.error({...error, src: 'checkInAction/attendanceQuery'})
+    console.error({ ...error, src: 'checkInAction/attendanceQuery' })
     return encodedRedirect('error', '/member/check-in', 'An error occurred')
   }
 

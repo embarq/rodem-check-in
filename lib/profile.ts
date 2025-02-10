@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { UserProfile } from './model'
+import { profilesTableName } from './db'
 
 export const getUserProfile = async (
   payload: Pick<UserProfile, 'user_id'>,
@@ -7,7 +8,7 @@ export const getUserProfile = async (
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('profiles')
+    .from(profilesTableName)
     .select('*')
     .eq('user_id', payload.user_id)
     .single()
