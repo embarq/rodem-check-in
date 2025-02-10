@@ -182,6 +182,11 @@ export const checkInAction = async () => {
     return encodedRedirect('error', '/member/check-in', 'Already checked in')
   }
 
+  console.log('checkInAction', {
+    user_profile_id: profile?.id,
+    created_at: baseTs.toDate(),
+  })
+
   const { error } = await supabase.from('attendance').insert({
     user_profile_id: profile?.id,
     created_at: baseTs.toDate(),
