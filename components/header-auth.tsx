@@ -12,7 +12,7 @@ export default async function HeaderAuth() {
   return (
     <div className="flex w-full items-center justify-between gap-4">
       <div className="font-bold uppercase tracking-widest opacity-50">
-        Check in
+        Rodem | Check in
       </div>
       <form action={signOutAction}>
         {user ? (

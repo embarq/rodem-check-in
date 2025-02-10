@@ -1,6 +1,6 @@
 import HeaderAuth from '@/components/header-auth'
 import { ThemeSwitcher } from '@/components/theme-switcher'
-import { Geist } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import './globals.css'
 
@@ -10,13 +10,15 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: 'Next.js and Supabase Starter Kit',
-  description: 'The fastest way to build apps with Next.js and Supabase',
+  title: 'Rodem | Check In',
+  description: 'Rodem school - check in system',
 }
 
-const geistSans = Geist({
+const poppins = Poppins({
   display: 'swap',
   subsets: ['latin'],
+  weight: ["400", "500", "600", "800"],
+  preload: true,
 })
 
 export default function RootLayout({
@@ -25,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={geistSans.className} suppressHydrationWarning>
+    <html lang="en" className={poppins.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
