@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     const { offset, limit, filters, order } =
       await GetExportParamsSchema.parseAsync(queryParamsMap)
 
-    const supabase = await createClient()
+    const supabase = await createClient(true)
     const attendanceQuery = supabase
       .from(attendanceTableName)
       .select(
