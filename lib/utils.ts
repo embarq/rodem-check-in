@@ -1,6 +1,12 @@
 import { SupabaseClient } from '@supabase/supabase-js'
 import { clsx, type ClassValue } from 'clsx'
+import $dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { twMerge } from 'tailwind-merge'
+
+$dayjs.extend(utc)
+
+export const dayjs = $dayjs
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
