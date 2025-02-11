@@ -36,7 +36,9 @@ export function mapQsFiltersToSupabaseFilters<
       for (const [operator, value] of Object.entries(_filters)) {
         if (operator in operatorMap) {
           const op = operatorMap[operator as keyof typeof operatorMap]
-          query = (query[op] as unknown as QueryBuilderFilter)(prop, value)
+          const nextOp = query[op] as unknown as QueryBuilderFilter
+
+          query = nextOp.apply(query, [prop, maybeStringifyDate(value)])
         }
       }
     }
@@ -51,5 +53,9 @@ export function mapQsFiltersToSupabaseFilters<
   }
 
   return query
+}
+
+function maybeStringifyDate(value: unknown): unknown {
+  return value instanceof Date ? dayjs(value).toISOString() : value
 }
 
