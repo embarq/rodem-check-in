@@ -1,3 +1,4 @@
-export const attendanceTableName = 'attendance'
+export const attendanceTableName = 'attendance' as const
 
-export const profilesTableName = 'profiles'
+export const profilesTableName = 'profiles' as const
+
