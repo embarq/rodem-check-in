@@ -1,0 +1,18 @@
+{
+  "ThemeSwitcher": {
+    "label": "Theme",
+    "options": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "LocaleSwitcher": {
+    "label": "Language",
+    "options": {
+      "kr": "한국어",
+      "en": "English",
+      "ru": "Русский"
+    }
+  }
+}
