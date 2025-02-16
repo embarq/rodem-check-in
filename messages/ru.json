@@ -14,5 +14,17 @@
       "en": "English",
       "ru": "Русский"
     }
+  },
+  "SignIn": {
+    "title": "Войти в аккаунт",
+    "email_field_label": "Эл. почта",
+    "password_field_label": "Пароль",
+    "password_field_placeholder": "Ваш пароль",
+    "forgot_password_link": "Забыли пароль?",
+    "sign_in_button": "Войти",
+    "sign_up_hint": "Нет учетной записи?",
+    "sign_in_button_loading": "Выполняется вход...",
+    "sign_up_link": "Зарегистрироваться"
   }
 }
+
