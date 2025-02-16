@@ -6,11 +6,13 @@ export type Message =
   | { message: string }
 
 interface Props {
-  message: Message
+  message?: Message | null
   className?: string
 }
 
 export function FormMessage({ message, className }: Props) {
+  if (!message) return null
+
   return (
     <div
       className={classNames(

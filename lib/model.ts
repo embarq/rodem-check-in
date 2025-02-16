@@ -1,3 +1,8 @@
+export type FormActionMessage =
+  | { success: string }
+  | { error: string }
+  | { message: string }
+
 export interface UserProfile {
   id: number
   user_id: string

@@ -1,8 +1,11 @@
-import { SupabaseClient } from '@supabase/supabase-js'
-import { clsx, type ClassValue } from 'clsx'
+import { type ClassValue, clsx } from 'clsx'
 import $dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import type { useTranslations } from 'next-intl'
+import type { getTranslations } from 'next-intl/server'
 import { twMerge } from 'tailwind-merge'
+import type { FormActionMessage } from '@/lib/model'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 $dayjs.extend(utc)
 
@@ -57,5 +60,23 @@ export function mapQsFiltersToSupabaseFilters<
 
 function maybeStringifyDate(value: unknown): unknown {
   return value instanceof Date ? dayjs(value).toISOString() : value
+}
+
+export function maybeTranslateFormMessage(
+  msg: FormActionMessage,
+  t:
+    | Awaited<ReturnType<typeof getTranslations>>
+    | ReturnType<typeof useTranslations>,
+): FormActionMessage | null {
+  switch (true) {
+    case 'success' in msg:
+      return { success: t(msg.success) }
+    case 'error' in msg:
+      return { error: t(msg.error) }
+    case 'message' in msg:
+      return { message: t(msg.message) }
+    default:
+      return null
+  }
 }
 

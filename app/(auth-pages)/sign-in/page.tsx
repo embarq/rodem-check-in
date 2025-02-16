@@ -1,14 +1,19 @@
+import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 import { signInAction } from '@/app/actions'
-import { FormMessage, Message } from '@/components/form-message'
+import { FormMessage } from '@/components/form-message'
 import { SubmitButton } from '@/components/submit-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
+import { FormActionMessage } from '@/lib/model'
+import { maybeTranslateFormMessage } from '@/lib/utils'
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
+export default async function Login(props: {
+  searchParams: Promise<FormActionMessage>
+}) {
   const searchParams = await props.searchParams
   const t = await getTranslations('SignIn')
+  const formMessage = maybeTranslateFormMessage(searchParams, t)
 
   return (
     <form className="flex min-w-64 flex-1 flex-col">
@@ -43,7 +48,7 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
         >
           {t('sign_in_button')}
         </SubmitButton>
-        <FormMessage message={searchParams} />
+        <FormMessage message={formMessage} />
       </div>
     </form>
   )

@@ -1,14 +1,11 @@
 'use server'
 
-import { encodedRedirect } from '@/utils/utils'
-import { createClient } from '@/utils/supabase/server'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import dayjs from 'dayjs'
-import dayjsPluginUtc from 'dayjs/plugin/utc'
 import { attendanceTableName, profilesTableName } from '@/lib/db'
-
-dayjs.extend(dayjsPluginUtc)
+import { dayjs } from '@/lib/utils'
+import { createClient } from '@/utils/supabase/server'
+import { encodedRedirect } from '@/utils/utils'
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get('email')?.toString()
@@ -18,11 +15,7 @@ export const signUpAction = async (formData: FormData) => {
   const origin = (await headers()).get('origin')
 
   if (!email || !password) {
-    return encodedRedirect(
-      'error',
-      '/sign-up',
-      'Email and password are required',
-    )
+    return encodedRedirect('error', '/sign-up', 'message_error_required_login')
   }
 
   const { error } = await supabase.auth.signUp({
@@ -38,13 +31,9 @@ export const signUpAction = async (formData: FormData) => {
 
   if (error) {
     console.error(error.code + ' ' + error.message)
-    return encodedRedirect('error', '/sign-up', error.message)
+    return encodedRedirect('error', '/sign-up', 'message_error_unknown')
   } else {
-    return encodedRedirect(
-      'success',
-      '/sign-up',
-      'Thanks for signing up! Please check your email for a verification link.',
-    )
+    return encodedRedirect('success', '/sign-up', 'message_success')
   }
 }
 
@@ -59,7 +48,10 @@ export const signInAction = async (formData: FormData) => {
   })
 
   if (error) {
-    return encodedRedirect('error', '/sign-in', error.message)
+    if ('code' in error) {
+      return encodedRedirect('error', '/sign-in', 'message_error_' + error.code)
+    }
+    return encodedRedirect('error', '/sign-in', 'message_error_unknown')
   }
 
   return redirect('/member/check-in')
@@ -72,7 +64,11 @@ export const forgotPasswordAction = async (formData: FormData) => {
   const callbackUrl = formData.get('callbackUrl')?.toString()
 
   if (!email) {
-    return encodedRedirect('error', '/forgot-password', 'Email is required')
+    return encodedRedirect(
+      'error',
+      '/forgot-password',
+      'message_error_email_required',
+    )
   }
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -80,23 +76,15 @@ export const forgotPasswordAction = async (formData: FormData) => {
   })
 
   if (error) {
-    console.error(error.message)
-    return encodedRedirect(
-      'error',
-      '/forgot-password',
-      'Could not reset password',
-    )
+    console.error(error)
+    return encodedRedirect('error', '/forgot-password', 'message_error_unknown')
   }
 
   if (callbackUrl) {
     return redirect(callbackUrl)
   }
 
-  return encodedRedirect(
-    'success',
-    '/forgot-password',
-    'Check your email for a link to reset your password.',
-  )
+  return encodedRedirect('success', '/forgot-password', 'message_success')
 }
 
 export const resetPasswordAction = async (formData: FormData) => {
@@ -109,7 +97,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     return encodedRedirect(
       'error',
       '/member/reset-password',
-      'Password and confirm password are required',
+      'message_error_missing_required_fields',
     )
   }
 
@@ -117,7 +105,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     return encodedRedirect(
       'error',
       '/member/reset-password',
-      'Passwords do not match',
+      'message_error_confirm_password',
     )
   }
 
@@ -128,17 +116,15 @@ export const resetPasswordAction = async (formData: FormData) => {
   if (error) {
     const msg =
       error.code === 'same_password'
-        ? 'Password is the same as the current password. Please choose another one.'
-        : error.message
+        ? 'message_error_same_password'
+        : 'message_error_unknown'
+
+    console.error(error)
 
     return encodedRedirect('error', '/member/reset-password', msg)
   }
 
-  return encodedRedirect(
-    'success',
-    '/member/reset-password',
-    'Password updated',
-  )
+  return encodedRedirect('success', '/member/reset-password', 'message_success')
 }
 
 export const signOutAction = async () => {
@@ -156,7 +142,11 @@ export const checkInAction = async () => {
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return encodedRedirect('error', '/member/check-in', 'User not found')
+    return encodedRedirect(
+      'error',
+      '/member/check-in',
+      'message_error_missing_user_data',
+    )
   }
 
   const { data: profile } = await supabase
@@ -177,11 +167,15 @@ export const checkInAction = async () => {
 
   if (records.error) {
     console.error({ ...records.error, src: 'checkInAction/recordsQuery' })
-    return encodedRedirect('error', '/member/check-in', 'An error occurred')
+    return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
   }
 
   if (records.count! > 0) {
-    return encodedRedirect('error', '/member/check-in', 'Already checked in')
+    return encodedRedirect(
+      'error',
+      '/member/check-in',
+      'message_error_already_checked_in',
+    )
   }
 
   const { error } = await supabase.from(attendanceTableName).insert({
@@ -191,9 +185,9 @@ export const checkInAction = async () => {
 
   if (error) {
     console.error({ ...error, src: 'checkInAction/attendanceQuery' })
-    return encodedRedirect('error', '/member/check-in', 'An error occurred')
+    return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
   }
 
-  return encodedRedirect('success', '/member/check-in', 'Submission successful')
+  return encodedRedirect('success', '/member/check-in', 'message_success')
 }
 
