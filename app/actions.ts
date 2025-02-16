@@ -2,6 +2,8 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { getDistance } from 'geolib'
+import * as config from '@/lib/config'
 import { attendanceTableName, profilesTableName } from '@/lib/db'
 import { dayjs } from '@/lib/utils'
 import { createClient } from '@/utils/supabase/server'
@@ -133,7 +135,43 @@ export const signOutAction = async () => {
   return redirect('/sign-in')
 }
 
-export const checkInAction = async () => {
+const checkInTargetGeolocation = parseTargetGeolocation(
+  config.checkInTargetGeolocation,
+)
+
+export const checkInAction = async ({
+  latitude,
+  longitude,
+}: {
+  latitude: number
+  longitude: number
+}) => {
+  const userCoords = { latitude, longitude }
+
+  if (!userCoords) {
+    return encodedRedirect(
+      'error',
+      '/member/check-in',
+      'message_error_missing_geolocation_data',
+    )
+  }
+
+  if (checkInTargetGeolocation == null) {
+    console.error(new Error('Target geolocation is not set'))
+
+    return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
+  }
+
+  const distance = getDistance(userCoords, checkInTargetGeolocation, 0.1)
+
+  if (distance > config.checkInTargetMaxDistance) {
+    return encodedRedirect(
+      'error',
+      '/member/check-in',
+      'message_error_too_far_from_the_target',
+    )
+  }
+
   const baseTs = dayjs().utc().set('s', 0).set('ms', 0)
   const timestampLimit = baseTs.subtract(1, 'h').toISOString()
   const supabase = await createClient()
@@ -189,5 +227,31 @@ export const checkInAction = async () => {
   }
 
   return encodedRedirect('success', '/member/check-in', 'message_success')
+}
+
+function parseTargetGeolocation(value?: string) {
+  const src = Buffer.from(value ?? '', 'base64').toString('utf-8')
+  const [latitude, longitude] = src.split(',')
+
+  return extractCoordinates(
+    new Map([
+      ['latitude', latitude],
+      ['longitude', longitude],
+    ]),
+  )
+}
+
+function extractCoordinates(data: FormData | Map<string, string>) {
+  const latitude = data.get('latitude')
+  const longitude = data.get('longitude')
+
+  if (typeof latitude !== 'string' || typeof longitude !== 'string') {
+    return null
+  }
+
+  return {
+    latitude: parseFloat(latitude),
+    longitude: parseFloat(longitude),
+  }
 }
 
