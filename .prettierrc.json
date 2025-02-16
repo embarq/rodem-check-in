@@ -9,6 +9,10 @@
   "endOfLine": "crlf",
   "printWidth": 80,
   "plugins": [
-    "prettier-plugin-tailwindcss"
-  ]
+    "prettier-plugin-tailwindcss",
+    "@trivago/prettier-plugin-sort-imports"
+  ],
+  "importOrder": ["^(react|next/)[\\w-_]*", "<THIRD_PARTY_MODULES>",  "^@(\\w*)/(.*)$", "^[./]"],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true
 }
