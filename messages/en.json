@@ -14,5 +14,17 @@
       "en": "English",
       "ru": "Русский"
     }
+  },
+  "SignIn": {
+    "title": "Sign in",
+    "email_field_label": "Email",
+    "password_field_label": "Password",
+    "password_field_placeholder": "Your password",
+    "forgot_password_link": "Forgot Password?",
+    "sign_in_button": "Sign in",
+    "sign_up_hint": "Don't have an account",
+    "sign_in_button_loading": "Signing In...",
+    "sign_up_link": "Sign up"
   }
 }
+
