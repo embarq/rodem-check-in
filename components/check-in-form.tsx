@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { useTranslations } from 'next-intl'
-import { checkInAction } from '@/app/actions'
+import { checkInAction } from '@/app/member/check-in/actions'
 import { SubmitButton } from '@/components/submit-button'
 import { UseGeolocationResult, useGeolocation } from '@/lib/geolocation'
 
