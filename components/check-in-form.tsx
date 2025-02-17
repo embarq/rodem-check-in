@@ -1,11 +1,10 @@
 'use client'
 
-import { FormEvent, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { useTranslations } from 'next-intl'
 import { checkInAction } from '@/app/member/check-in/actions'
 import { SubmitButton } from '@/components/submit-button'
-import { UseGeolocationResult, useGeolocation } from '@/lib/geolocation'
+import { useGeolocation } from '@/lib/geolocation'
 
 interface Props {
   className?: string
@@ -16,11 +15,9 @@ export const CheckInForm: React.FC<React.PropsWithChildren<Props>> = ({
   className,
 }) => {
   const t = useTranslations('CheckIn')
-  const { requestLocation, events } = useGeolocation()
-  const [location, setLocation] = useState<UseGeolocationResult>()
+  const { requestLocation } = useGeolocation()
 
-  const init = async (e: FormEvent) => {
-
+  const handleSubmit = async () => {
     try {
       const result = await requestLocation()
 
@@ -34,30 +31,15 @@ export const CheckInForm: React.FC<React.PropsWithChildren<Props>> = ({
     }
   }
 
-  // useEffect(() => {
-  //   void init().catch(console.error)
-  // }, [])
-
   return (
     <form
       className={classNames('flex flex-col justify-end', className)}
       onSubmit={e => e.preventDefault()}
     >
-      <input
-        type="number"
-        name="latitude"
-        hidden
-        value={location?.latitude ?? ''}
-        readOnly
-      />
-      <input
-        type="number"
-        name="longitude"
-        hidden
-        value={location?.longitude ?? ''}
-        readOnly
-      />
-      <SubmitButton onClick={init} pendingText={t('submit_button_loading')}>
+      <SubmitButton
+        onClick={handleSubmit}
+        pendingText={t('submit_button_loading')}
+      >
         {t('submit_button')}
       </SubmitButton>
       {children}

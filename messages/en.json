@@ -69,13 +69,15 @@
     "title": "Check in",
     "submit_button": "Check in",
     "submit_button_loading": "Loading...",
-    "message_error_already_checked_in": "Already checked in",
+    "message_error_already_checked_in": "Check in failed: looks like you've already checked in",
     "message_error_missing_user_data": "User not found",
     "message_error_geolocation_not_supported": "Geolocation is not supported",
     "message_error_missing_geolocation_data": "Geolocation data not found",
     "message_error_location_permission_denied": "Location permission denied",
     "message_error_too_far_from_the_target": "Too far from the target",
+    "message_error_malformed_url": "The URL that's being used is malformed",
     "message_error_unknown": "An error occurred. Please try again later.",
+    "message_error_title": "Check in failed",
     "message_success": "Submission successful"
   }
 }
