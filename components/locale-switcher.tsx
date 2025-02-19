@@ -13,7 +13,7 @@ import {
 import { Locale } from '@/i18n/config'
 import { setUserLocale } from '@/lib/locale'
 
-export default function LocaleSwitcher() {
+export function LocaleSwitcher() {
   const t = useTranslations('LocaleSwitcher')
   const [mounted, setMounted] = useState(false)
   const locale = useLocale() as Locale
@@ -29,7 +29,7 @@ export default function LocaleSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center sm:space-x-2">
           <span>{t('label')}:</span>
           <Button variant="ghost" size={'sm'} className="text-xl">
             {locale === 'en' ? '🇬🇧' : locale === 'kr' ? '🇰🇷' : '🇷🇺'}

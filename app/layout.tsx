@@ -1,14 +1,11 @@
-import HeaderAuth from '@/components/header-auth'
-import { Poppins } from 'next/font/google'
+import { HeaderAuth } from '@/components/header-auth'
+import { Inter, Noto_Sans_KR } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import './globals.css'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
-import Footer from '@/components/footer'
-
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3033'
+import { Footer } from '@/components/footer'
+import { defaultUrl } from '@/lib/config'
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
@@ -16,11 +13,20 @@ export const metadata = {
   description: 'Rodem school - check in system',
 }
 
-const poppins = Poppins({
+const inter = Inter({
+  display: 'swap',
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '800'],
+  preload: true,
+  variable: '--font-inter',
+})
+
+const notoSansKr = Noto_Sans_KR({
   display: 'swap',
   subsets: ['latin'],
   weight: ['400', '500', '600', '800'],
   preload: true,
+  variable: '--font-noto-sans-kr',
 })
 
 export default async function RootLayout({
@@ -30,9 +36,14 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale()
   const messages = await getMessages()
+  const selectedFont = locale.includes('ko') ? notoSansKr : inter
 
   return (
-    <html lang={locale} className={poppins.className} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={selectedFont.variable}
+      suppressHydrationWarning
+    >
       <body className="bg-background text-foreground">
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider

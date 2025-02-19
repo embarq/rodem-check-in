@@ -1,5 +1,9 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { Laptop, Moon, Sun } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -8,10 +12,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Laptop, Moon, Sun } from 'lucide-react'
-import { useTranslations } from 'next-intl'
-import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
 
 const ThemeSwitcher = () => {
   const t = useTranslations('ThemeSwitcher')
@@ -32,7 +32,7 @@ const ThemeSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center sm:space-x-2">
           <span>{t('label')}:</span>
           <Button variant="ghost" size={'sm'}>
             {theme === 'light' ? (
