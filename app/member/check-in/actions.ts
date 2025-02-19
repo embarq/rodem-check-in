@@ -1,15 +1,11 @@
 'use server'
 
-import { getDistance } from 'geolib'
+import { isPointInPolygon } from 'geolib'
 import * as config from '@/lib/config'
 import { attendanceTableName, profilesTableName } from '@/lib/db'
 import { dayjs } from '@/lib/utils'
 import { createClient } from '@/utils/supabase/server'
 import { encodedRedirect } from '@/utils/utils'
-
-const checkInTargetGeolocation = parseTargetGeolocation(
-  config.checkInTargetGeolocation,
-)
 
 export const checkInAction = async ({
   latitude,
@@ -28,15 +24,21 @@ export const checkInAction = async ({
     )
   }
 
-  if (checkInTargetGeolocation == null) {
+  if (config.checkInTargetGeolocation == null) {
     console.error(new Error('Target geolocation is not set'))
 
     return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
   }
 
-  const distance = getDistance(userCoords, checkInTargetGeolocation, 0.1)
+  const target = config.checkInTargetGeolocation
+  const isWithinBounds = isPointInPolygon(userCoords, [
+    target.n,
+    target.e,
+    target.s,
+    target.w,
+  ])
 
-  if (distance > config.checkInTargetMaxDistance) {
+  if (isWithinBounds) {
     return encodedRedirect(
       'error',
       '/member/check-in',
@@ -101,28 +103,3 @@ export const checkInAction = async ({
   return encodedRedirect('success', '/member/check-in', 'message_success')
 }
 
-function parseTargetGeolocation(value?: string) {
-  const src = Buffer.from(value ?? '', 'base64').toString('utf-8')
-  const [latitude, longitude] = src.split(',')
-
-  return extractCoordinates(
-    new Map([
-      ['latitude', latitude],
-      ['longitude', longitude],
-    ]),
-  )
-}
-
-function extractCoordinates(data: FormData | Map<string, string>) {
-  const latitude = data.get('latitude')
-  const longitude = data.get('longitude')
-
-  if (typeof latitude !== 'string' || typeof longitude !== 'string') {
-    return null
-  }
-
-  return {
-    latitude: parseFloat(latitude),
-    longitude: parseFloat(longitude),
-  }
-}
