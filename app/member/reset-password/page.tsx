@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
+import { CommonLayout } from '@/app/(auth-pages)/common-layout'
 import { resetPasswordAction } from '@/app/actions'
 import { FormMessage } from '@/components/form-message'
 import { SubmitButton } from '@/components/submit-button'
@@ -27,9 +28,7 @@ export default async function ResetPassword(props: {
   const formMessage = maybeTranslateFormMessage(searchParams, t)
 
   return (
-    <form className="flex w-full max-w-md flex-col gap-2 p-4 [&>input]:mb-4">
-      <h1 className="text-2xl font-medium">{t('title')}</h1>
-      <p className="text-sm text-foreground/60">{t('description')}</p>
+    <CommonLayout title={t('title')} description={t('description')}>
       <Label htmlFor="password">{t('new_password_field_label')}</Label>
       <Input
         type="password"
@@ -49,8 +48,10 @@ export default async function ResetPassword(props: {
       <SubmitButton formAction={resetPasswordAction}>
         {t('reset_password_button_label')}
       </SubmitButton>
-      <FormMessage message={formMessage} />
-    </form>
+      <footer className="pt-4">
+        <FormMessage message={formMessage} />
+      </footer>
+    </CommonLayout>
   )
 }
 

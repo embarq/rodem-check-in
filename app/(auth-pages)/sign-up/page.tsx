@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import { CommonLayout } from '@/app/(auth-pages)/common-layout'
 import { signUpAction } from '@/app/actions'
 import { FormMessage } from '@/components/form-message'
 import { SubmitButton } from '@/components/submit-button'
@@ -28,48 +29,45 @@ export default async function Signup(props: {
   }
 
   return (
-    <form className="mx-auto flex min-w-64 max-w-64 flex-col">
-      <h1 className="text-2xl font-medium">{t('title')}</h1>
-      <p className="text text-sm text-foreground">
-        {t('existing_account')}{' '}
-        <Link className="font-medium text-primary underline" href="/sign-in">
-          {t('sign_in_button')}
-        </Link>
-      </p>
-      <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
-        <Label htmlFor="name">{t('name_field_label')}</Label>
-        <Input
-          name="name"
-          placeholder="John Doe"
-          required
-          autoComplete="name"
-        />
-        <Label htmlFor="email">{t('email_field_label')}</Label>
-        <Input
-          name="email"
-          placeholder="you@example.com"
-          required
-          autoComplete="email"
-        />
-        <Label htmlFor="password">{t('password_field_label')}</Label>
-        <Input
-          type="password"
-          name="password"
-          placeholder={t('password_field_placeholder')}
-          minLength={6}
-          required
-        />
-        <SubmitButton
-          formAction={signUpAction}
-          pendingText={t('sign_up_button_loading')}
-        >
-          {t('sign_up_button')}
-        </SubmitButton>
-        <footer className="pt-4">
-          <FormMessage message={result} />
-        </footer>
-      </div>
-    </form>
+    <CommonLayout
+      title={t('title')}
+      description={
+        <>
+          {t('existing_account')}{' '}
+          <Link href="/sign-in" className="font-medium text-primary underline">
+            {t('sign_in_button')}
+          </Link>
+        </>
+      }
+    >
+      <Label htmlFor="name">{t('name_field_label')}</Label>
+      <Input name="name" placeholder="John Doe" required autoComplete="name" />
+      <Label htmlFor="email">{t('email_field_label')}</Label>
+      <Input
+        name="email"
+        placeholder="you@example.com"
+        required
+        autoComplete="email"
+      />
+      <Label htmlFor="password">{t('password_field_label')}</Label>
+      <Input
+        type="password"
+        name="password"
+        placeholder={t('password_field_placeholder')}
+        minLength={6}
+        autoComplete="new-password"
+        required
+      />
+      <SubmitButton
+        formAction={formAction}
+        pendingText={t('sign_up_button_loading')}
+      >
+        {t('sign_up_button')}
+      </SubmitButton>
+      <footer className="pt-4">
+        <FormMessage message={result} />
+      </footer>
+    </CommonLayout>
   )
 }
 
