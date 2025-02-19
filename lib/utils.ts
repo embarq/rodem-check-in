@@ -4,7 +4,9 @@ import utc from 'dayjs/plugin/utc'
 import type { useTranslations } from 'next-intl'
 import type { getTranslations } from 'next-intl/server'
 import { twMerge } from 'tailwind-merge'
+import { z } from 'zod'
 import type { FormActionMessage } from '@/lib/model'
+import { RedirectConfig, RedirectConfigSchema } from '@/lib/types'
 import type { SupabaseClient } from '@supabase/supabase-js'
 
 $dayjs.extend(utc)
@@ -77,6 +79,51 @@ export function maybeTranslateFormMessage(
       return { message: t(msg.message) }
     default:
       return null
+  }
+}
+
+export function parseRedirectConfig(
+  input?: unknown,
+): RedirectConfig | undefined {
+  const schema = z
+    .string()
+    .base64()
+    .transform(value => Buffer.from(value, 'base64').toString('utf-8'))
+    .transform((value, ctx) => {
+      const [res, err] = safeJSONParse(value)
+
+      if (err) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: err.message,
+        })
+
+        return z.NEVER
+      }
+
+      const validationResult = RedirectConfigSchema.safeParse(res)
+
+      if (!validationResult.success) {
+        validationResult.error.issues.forEach(issue => ctx.addIssue(issue))
+
+        return z.NEVER
+      }
+
+      return validationResult.data
+    })
+
+  const { data, error } = schema.safeParse(input)
+
+  error && console.error(error)
+
+  return data
+}
+
+export function safeJSONParse<T>(value: string): [T, null] | [null, Error] {
+  try {
+    return [JSON.parse(value) as T, null]
+  } catch (error) {
+    return [null, error as Error]
   }
 }
 

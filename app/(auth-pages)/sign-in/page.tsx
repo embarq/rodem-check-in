@@ -6,14 +6,21 @@ import { SubmitButton } from '@/components/submit-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { FormActionMessage } from '@/lib/model'
-import { maybeTranslateFormMessage } from '@/lib/utils'
+import { maybeTranslateFormMessage, parseRedirectConfig } from '@/lib/utils'
 
 export default async function Login(props: {
-  searchParams: Promise<FormActionMessage>
+  searchParams: Promise<FormActionMessage & { redirect_conf: string }>
 }) {
-  const searchParams = await props.searchParams
+  const { redirect_conf, ...searchParams } = await props.searchParams
   const t = await getTranslations('SignIn')
   const formMessage = maybeTranslateFormMessage(searchParams, t)
+  const redirectConfig = redirect_conf
+    ? parseRedirectConfig(redirect_conf)
+    : void 0
+  const formAction = async (formData: FormData) => {
+    'use server'
+    await signInAction(formData, redirectConfig)
+  }
 
   return (
     <form className="flex min-w-64 flex-1 flex-col">

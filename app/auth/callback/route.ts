@@ -1,6 +1,7 @@
-import { completeSignUp } from '@/lib/auth'
-import { createClient } from '@/utils/supabase/server'
 import { NextResponse } from 'next/server'
+import { completeSignUp } from '@/lib/auth'
+import { parseRedirectConfig } from '@/lib/utils'
+import { createClient } from '@/utils/supabase/server'
 
 export async function GET(request: Request) {
   // The `/auth/callback` route is required for the server-side auth flow implemented
@@ -10,6 +11,9 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get('code')
   const origin = requestUrl.origin
   const redirectTo = requestUrl.searchParams.get('redirect_to')?.toString()
+  const redirectConfigRaw = requestUrl.searchParams
+    .get('redirect_conf')
+    ?.toString()
 
   if (code) {
     const supabase = await createClient()
@@ -29,7 +33,21 @@ export async function GET(request: Request) {
         throw new Error(error.message)
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
+    }
+  }
+
+  if (redirectConfigRaw) {
+    const redirectConfig = parseRedirectConfig(redirectConfigRaw)
+
+    if (redirectConfig) {
+      const url = new URL(redirectConfig.pathname, origin)
+
+      Object.entries(redirectConfig.query).forEach(([key, value]) => {
+        url.searchParams.set(key, value)
+      })
+
+      return NextResponse.redirect(url)
     }
   }
 

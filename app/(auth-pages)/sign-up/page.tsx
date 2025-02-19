@@ -9,11 +9,15 @@ import type { FormActionMessage } from '@/lib/model'
 import { maybeTranslateFormMessage } from '@/lib/utils'
 
 export default async function Signup(props: {
-  searchParams: Promise<FormActionMessage>
+  searchParams: Promise<FormActionMessage & { redirect_conf: string }>
 }) {
-  const searchParams = await props.searchParams
+  const { redirect_conf, ...searchParams } = await props.searchParams
   const t = await getTranslations('SignUp')
   const result = maybeTranslateFormMessage(searchParams, t)
+  const formAction = async (formData: FormData) => {
+    'use server'
+    await signUpAction(formData, redirect_conf)
+  }
 
   if (result && 'message' in result) {
     return (
