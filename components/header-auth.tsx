@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Button } from './ui/button'
 import { createClient } from '@/utils/supabase/server'
 
-export default async function HeaderAuth() {
+export async function HeaderAuth() {
   const supabase = await createClient()
   const {
     data: { user },

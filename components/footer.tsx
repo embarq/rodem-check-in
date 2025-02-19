@@ -1,16 +1,16 @@
 import classNames from 'classnames'
+import { LocaleSwitcher } from './locale-switcher'
 import { ThemeSwitcher } from './theme-switcher'
-import LocaleSwitcher from './locale-switcher'
 
 interface Props {
   className?: string
 }
 
-export default function Footer({ className }: Props) {
+export function Footer({ className }: Props) {
   return (
     <footer
       className={classNames(
-        'mx-auto flex w-full items-center justify-between gap-8 border-t px-5 py-4 text-center text-xs',
+        'mx-auto flex min-h-[4.3125rem] w-full items-center justify-between gap-8 border-t px-5 py-4 text-center text-xs',
         className,
       )}
     >

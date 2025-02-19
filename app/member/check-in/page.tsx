@@ -37,7 +37,7 @@ export default async function CheckInPage(props: {
   keyFormatError && console.error(keyFormatError)
 
   return (
-    <CheckInForm className="w-full h-full flex-1">
+    <CheckInForm className="h-full w-full flex-1">
       <FormMessage
         title={hasError ? t('message_error_title') : ''}
         message={formMessage}
