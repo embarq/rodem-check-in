@@ -2,10 +2,14 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { RedirectConfig } from '@/lib/types'
 import { createClient } from '@/utils/supabase/server'
-import { encodedRedirect } from '@/utils/utils'
+import { encodedRedirect, redirectWithConfig } from '@/utils/utils'
 
-export const signUpAction = async (formData: FormData) => {
+export const signUpAction = async (
+  formData: FormData,
+  redirectConfigRaw?: string,
+) => {
   const email = formData.get('email')?.toString()
   const password = formData.get('password')?.toString()
   const name = formData.get('name')?.toString()
@@ -23,7 +27,9 @@ export const signUpAction = async (formData: FormData) => {
       data: {
         name,
       },
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: redirectConfigRaw
+        ? `${origin}/auth/callback?redirect_conf=${redirectConfigRaw}`
+        : `${origin}/auth/callback`,
     },
   })
 
@@ -35,7 +41,10 @@ export const signUpAction = async (formData: FormData) => {
   }
 }
 
-export const signInAction = async (formData: FormData) => {
+export const signInAction = async (
+  formData: FormData,
+  redirectConfig?: RedirectConfig,
+) => {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const supabase = await createClient()
@@ -50,6 +59,10 @@ export const signInAction = async (formData: FormData) => {
       return encodedRedirect('error', '/sign-in', 'message_error_' + error.code)
     }
     return encodedRedirect('error', '/sign-in', 'message_error_unknown')
+  }
+
+  if (redirectConfig) {
+    return redirectWithConfig(redirectConfig)
   }
 
   return redirect('/member/check-in')
