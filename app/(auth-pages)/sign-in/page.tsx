@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useState } from 'react'
 import { getTranslations } from 'next-intl/server'
 import { CommonLayout } from '@/app/(auth-pages)/common-layout'
 import { signInAction } from '@/app/actions'
@@ -19,7 +18,6 @@ export default async function Login(props: {
   const redirectConfig = redirect_conf
     ? parseRedirectConfig(redirect_conf)
     : void 0
-
   const formAction = async (formData: FormData) => {
     'use server'
     await signInAction(formData, redirectConfig)
