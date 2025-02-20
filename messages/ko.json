@@ -18,6 +18,8 @@
   "SignIn": {
     "title": "Sign in",
     "email_field_label": "Email",
+    "username_field_label": "Username",
+    "username_field_placeholder": "+8201000000000 or you@example.com",
     "password_field_label": "Password",
     "password_field_placeholder": "Your password",
     "forgot_password_link": "Forgot Password?",
@@ -33,6 +35,8 @@
     "sign_in_button": "Sign in",
     "name_field_label": "Name",
     "email_field_label": "Email",
+    "phone_field_label": "Phone",
+    "phone_field_placeholder": "+82 010 0000 0000",
     "password_field_label": "Password",
     "password_field_placeholder": "Your password",
     "sign_up_button": "Sign up",
