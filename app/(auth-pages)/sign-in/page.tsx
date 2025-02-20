@@ -42,8 +42,14 @@ export default async function Login(props: {
         </>
       }
     >
-      <Label htmlFor="email">{t('email_field_label')}</Label>
-      <Input name="email" placeholder="you@example.com" required />
+      <Label htmlFor="username">{t('username_field_label')}</Label>
+      <Input
+        name="username"
+        placeholder={t('username_field_placeholder')}
+        type="tel"
+        required
+        autoComplete="username"
+      />
       <div className="flex items-center justify-between">
         <Label htmlFor="password">{t('password_field_label')}</Label>
         <Link

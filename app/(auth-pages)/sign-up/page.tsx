@@ -40,16 +40,26 @@ export default async function Signup(props: {
         </>
       }
     >
-      <Label htmlFor="name">{t('name_field_label')}</Label>
+      <Label htmlFor="name">
+        {t('name_field_label')}
+        <span className="ps-1 text-destructive">*</span>
+      </Label>
       <Input name="name" placeholder="John Doe" required autoComplete="name" />
-      <Label htmlFor="email">{t('email_field_label')}</Label>
+      <Label htmlFor="phone">
+        {t('phone_field_label')}
+        <span className="ps-1 text-destructive">*</span>
+      </Label>
       <Input
-        name="email"
-        placeholder="you@example.com"
+        type="tel"
+        name="phone"
+        placeholder={t('phone_field_placeholder')}
         required
-        autoComplete="email"
+        autoComplete="phone"
       />
-      <Label htmlFor="password">{t('password_field_label')}</Label>
+      <Label htmlFor="password">
+        {t('password_field_label')}
+        <span className="ps-1 text-destructive">*</span>
+      </Label>
       <Input
         type="password"
         name="password"
@@ -57,6 +67,13 @@ export default async function Signup(props: {
         minLength={6}
         autoComplete="new-password"
         required
+      />
+      <Label htmlFor="email">{t('email_field_label')}</Label>
+      <Input
+        type="email"
+        name="email"
+        placeholder="you@example.com"
+        autoComplete="email"
       />
       <SubmitButton
         formAction={formAction}

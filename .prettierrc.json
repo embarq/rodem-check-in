@@ -9,9 +9,12 @@
   "endOfLine": "crlf",
   "printWidth": 80,
   "plugins": [
-    "prettier-plugin-tailwindcss",
-    "@trivago/prettier-plugin-sort-imports"
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
   ],
+  "tailwindStylesheet": "./app/globals.css",
+  "tailwindConfig": "./tailwind.config.ts",
+  "tailwindFunctions": ["classNames", "classnames"],
   "importOrder": ["^(react|next/)[\\w-_]*", "<THIRD_PARTY_MODULES>",  "^@(\\w*)/(.*)$", "^[./]"],
   "importOrderSeparation": false,
   "importOrderSortSpecifiers": true
