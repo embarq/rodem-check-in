@@ -48,6 +48,7 @@ export default async function Login(props: {
       <Input
         name="username"
         placeholder={t('username_field_placeholder')}
+        type="tel"
         required
         autoComplete="username"
       />

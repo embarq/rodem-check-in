@@ -2,44 +2,57 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { completeSignUp } from '@/lib/auth'
 import { RedirectConfig } from '@/lib/types'
 import { createClient } from '@/utils/supabase/server'
 import { encodedRedirect, redirectWithConfig } from '@/utils/utils'
 
 export const signUpAction = async (
   formData: FormData,
-  redirectConfigRaw?: string,
+  redirectConfig?: string | RedirectConfig,
 ) => {
-  const email = formData.get('email')?.toString()
-  const password = formData.get('password')?.toString()
-  const name = formData.get('name')?.toString()
-  const phone = formData.get('phone')?.toString()
+  const email = formData.get('email')?.toString()!
+  const password = formData.get('password')?.toString()!
+  const name = formData.get('name')?.toString()!
+  const phone = formData.get('phone')?.toString()!
   const supabase = await createClient()
   const origin = (await headers()).get('origin')
 
-  if (!email || !password) {
+  if (!phone || !password) {
     return encodedRedirect('error', '/sign-up', 'message_error_required_login')
   }
 
-  const { error } = await supabase.auth.signUp({
-    email,
+  const { error, data } = await supabase.auth.signUp({
     password,
     phone,
     options: {
       data: {
-        name,
+        email,
       },
-      emailRedirectTo: redirectConfigRaw
-        ? `${origin}/auth/callback?redirect_conf=${redirectConfigRaw}`
-        : `${origin}/auth/callback`,
+      emailRedirectTo:
+        typeof redirectConfig === 'string'
+          ? `${origin}/auth/callback?redirect_conf=${redirectConfig}`
+          : `${origin}/auth/callback`,
     },
   })
 
   if (error) {
     console.error(error.code + ' ' + error.message)
-    return encodedRedirect('error', '/sign-up', 'message_error_unknown')
+    const message = [
+      'weak_password',
+      'validation_failed',
+      'phone_exists',
+    ].includes(error.code!)
+      ? 'message_error_' + error.code
+      : 'message_error_unknown'
+    return encodedRedirect('error', '/sign-up', message)
   } else {
-    return encodedRedirect('success', '/sign-up', 'message_success')
+    await completeSignUp({ user_id: data.user!.id, name, email, phone })
+
+    if (typeof redirectConfig === 'object') {
+      return redirectWithConfig(redirectConfig)
+    }
+    return redirect('/sign-up-success')
   }
 }
 
@@ -47,13 +60,13 @@ export const signInAction = async (
   formData: FormData,
   redirectConfig?: RedirectConfig,
 ) => {
-  const email = formData.get('email') as string
+  const username = formData.get('username') as string
   const password = formData.get('password') as string
   const supabase = await createClient()
 
   const { error } = await supabase.auth.signInWithPassword({
-    email,
     password,
+    phone: username,
   })
 
   if (error) {
