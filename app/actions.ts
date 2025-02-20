@@ -13,6 +13,7 @@ export const signUpAction = async (
   const email = formData.get('email')?.toString()
   const password = formData.get('password')?.toString()
   const name = formData.get('name')?.toString()
+  const phone = formData.get('phone')?.toString()
   const supabase = await createClient()
   const origin = (await headers()).get('origin')
 
@@ -23,6 +24,7 @@ export const signUpAction = async (
   const { error } = await supabase.auth.signUp({
     email,
     password,
+    phone,
     options: {
       data: {
         name,

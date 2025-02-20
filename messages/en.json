@@ -35,6 +35,8 @@
     "sign_in_button": "Sign in",
     "name_field_label": "Name",
     "email_field_label": "Email",
+    "phone_field_label": "Phone",
+    "phone_field_placeholder": "+82 010 0000 0000",
     "password_field_label": "Password",
     "password_field_placeholder": "Your password",
     "sign_up_button": "Sign up",

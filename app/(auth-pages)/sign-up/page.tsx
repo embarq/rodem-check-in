@@ -44,10 +44,19 @@ export default async function Signup(props: {
       <Input name="name" placeholder="John Doe" required autoComplete="name" />
       <Label htmlFor="email">{t('email_field_label')}</Label>
       <Input
+        type="email"
         name="email"
         placeholder="you@example.com"
         required
         autoComplete="email"
+      />
+      <Label htmlFor="phone">{t('phone_field_label')}</Label>
+      <Input
+        type="tel"
+        name="phone"
+        placeholder={t('phone_field_placeholder')}
+        required
+        autoComplete="phone"
       />
       <Label htmlFor="password">{t('password_field_label')}</Label>
       <Input
