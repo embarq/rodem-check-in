@@ -18,6 +18,8 @@
   "SignIn": {
     "title": "Sign in",
     "email_field_label": "Email",
+    "username_field_label": "Username",
+    "username_field_placeholder": "+8201000000000 or you@example.com",
     "password_field_label": "Password",
     "password_field_placeholder": "Your password",
     "forgot_password_link": "Forgot Password?",

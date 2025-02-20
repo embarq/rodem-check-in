@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useState } from 'react'
 import { getTranslations } from 'next-intl/server'
 import { CommonLayout } from '@/app/(auth-pages)/common-layout'
 import { signInAction } from '@/app/actions'
@@ -18,6 +19,7 @@ export default async function Login(props: {
   const redirectConfig = redirect_conf
     ? parseRedirectConfig(redirect_conf)
     : void 0
+
   const formAction = async (formData: FormData) => {
     'use server'
     await signInAction(formData, redirectConfig)
@@ -42,8 +44,13 @@ export default async function Login(props: {
         </>
       }
     >
-      <Label htmlFor="email">{t('email_field_label')}</Label>
-      <Input name="email" placeholder="you@example.com" required />
+      <Label htmlFor="username">{t('username_field_label')}</Label>
+      <Input
+        name="username"
+        placeholder={t('username_field_placeholder')}
+        required
+        autoComplete="username"
+      />
       <div className="flex items-center justify-between">
         <Label htmlFor="password">{t('password_field_label')}</Label>
         <Link
