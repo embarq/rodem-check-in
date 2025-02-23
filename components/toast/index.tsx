@@ -10,6 +10,7 @@ interface Props {
   isOpen?: boolean
   closable?: boolean
   onChange?: (open: boolean) => void
+  className?: string
 }
 
 export const Toast: React.FC<Props> = ({
@@ -18,17 +19,22 @@ export const Toast: React.FC<Props> = ({
   isOpen,
   onChange,
   closable = true,
+  className,
 }) => {
   return (
     <Root
-      className={cn(styles.ToastRoot)}
+      className={cn(styles.ToastRoot, className)}
       open={isOpen}
       onOpenChange={onChange}
     >
       {title && <Title>{title}</Title>}
       {closable && (
         <Close asChild>
-          <button type="button" onClick={() => onChange && onChange(false)}>
+          <button
+            type="button"
+            onClick={() => onChange && onChange(false)}
+            className="text-card"
+          >
             <XIcon />
           </button>
         </Close>
@@ -36,7 +42,7 @@ export const Toast: React.FC<Props> = ({
       {description && (
         <Description
           asChild={typeof description !== 'string'}
-          className="text-sm"
+          className="text-sm text-card"
         >
           {description}
         </Description>

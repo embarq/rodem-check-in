@@ -13,6 +13,12 @@ export function actionResult(
   }
 }
 
+export function validateActionResultMessage(
+  message: string,
+): asserts message is `message_${string}` {
+  if (!message.startsWith('message_')) throw new Error('Invalid action message')
+}
+
 export type FormActionMessage =
   | { success: string }
   | { error: string }

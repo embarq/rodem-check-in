@@ -9,6 +9,7 @@ import { SubmitButton } from '@/components/submit-button'
 import { Toast } from '@/components/toast'
 import { useGeolocation } from '@/lib/geolocation'
 import { AppActionResult } from '@/lib/model'
+import { cn } from '@/lib/utils'
 
 interface Props {
   className?: string
@@ -31,6 +32,8 @@ export const CheckInForm: React.FC<React.PropsWithChildren<Props>> = ({
       if (geolocation == null) {
         throw new Error('message_error_unknown')
       }
+
+      console.log({ geolocation })
 
       if (actionResult != null) {
         setActionResult(null)
@@ -69,6 +72,9 @@ export const CheckInForm: React.FC<React.PropsWithChildren<Props>> = ({
         description={actionResult?.message && t(actionResult.message)}
         isOpen={actionResult != null}
         onChange={isOpen => !isOpen && setActionResult(null)}
+        className={cn({
+          'border-b-4 border-b-destructive': !actionResult?.success,
+        })}
       />
       {children}
     </form>
