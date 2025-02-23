@@ -24,22 +24,23 @@ export default async function CheckInPage(props: {
 
   const t = await getTranslations('CheckIn')
   const { key, ...searchParams } = await props.searchParams
-  const hasError = 'error' in searchParams
+  const hasParamsError = 'error' in searchParams
   const { error: keyFormatError } =
-    (hasError || 'success' in searchParams) && key == null
+    (hasParamsError || 'success' in searchParams) && key == null
       ? { error: null }
       : await validateKey(key)
   const formMessage = maybeTranslateFormMessage(
     keyFormatError ? { error: 'message_error_malformed_url' } : searchParams,
     t,
   )
+  const hasError = hasParamsError || keyFormatError != null
 
   keyFormatError && console.error(keyFormatError)
 
   return (
-    <CheckInForm className="h-full w-full flex-1">
+    <CheckInForm className="h-full w-full flex-1" disabled={hasError}>
       <FormMessage
-        title={hasError ? t('message_error_title') : ''}
+        title={hasParamsError ? t('message_error_title') : ''}
         message={formMessage}
       />
     </CheckInForm>

@@ -1,3 +1,18 @@
+export interface AppActionResult {
+  success: boolean
+  message?: `message_${string}`
+}
+
+export function actionResult(
+  success: boolean,
+  message?: `message_${string}`,
+): AppActionResult {
+  return {
+    success,
+    message,
+  }
+}
+
 export type FormActionMessage =
   | { success: string }
   | { error: string }
@@ -11,3 +26,4 @@ export interface UserProfile {
   email: string
   metadata: string
 }
+
