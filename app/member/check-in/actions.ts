@@ -38,7 +38,7 @@ export const checkInAction = async ({
     target.w,
   ])
 
-  if (isWithinBounds) {
+  if (!isWithinBounds) {
     return encodedRedirect(
       'error',
       '/member/check-in',
