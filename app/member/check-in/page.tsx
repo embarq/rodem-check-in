@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import assert from 'assert'
 import { getTranslations } from 'next-intl/server'
 import { SafeParseReturnType, string } from 'zod'
@@ -7,21 +6,10 @@ import { FormMessage } from '@/components/form-message'
 import { generateHMAC } from '@/lib/crypto'
 import { FormActionMessage } from '@/lib/model'
 import { dayjs, maybeTranslateFormMessage } from '@/lib/utils'
-import { createClient } from '@/utils/supabase/server'
 
 export default async function CheckInPage(props: {
   searchParams: Promise<FormActionMessage & { key: string }>
 }) {
-  const supabase = await createClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) {
-    return redirect('/sign-in')
-  }
-
   const t = await getTranslations('CheckIn')
   const { key, ...searchParams } = await props.searchParams
   const hasParamsError = 'error' in searchParams
