@@ -29,7 +29,8 @@
     "sign_up_link": "Sign up",
     "message_error_invalid_credentials": "Invalid login credentials",
     "message_error_validation_failed": "Invalid login credentials",
-    "message_error_unknown": "An error occurred. Please try again later."
+    "message_error_unknown": "An error occurred. Please try again later.",
+    "message_error_title": "Error"
   },
   "SignUp": {
     "title": "Sign up",
@@ -45,10 +46,12 @@
     "sign_up_button_loading": "Signing up...",
     "message_success": "Thanks for signing up! Please check your email for a verification link.",
     "message_error_required_login": "Phone number and password are required.",
-    "message_error_weak_password": "Password is too weak. Please include at least one word character and at least one numeric. The password should be at least 6 characters.",
+    "message_error_weak_password": "Password is too weak. Please include at least one word character and at least one numeric. The password should be at least 8 characters.",
     "message_error_validation_failed": "Invalid phone number format",
     "message_error_phone_exists": "The phone number is already in use",
-    "message_error_unknown": "An error occurred. Please try again later."
+    "message_error_user_already_exists": "The login info is already in use",
+    "message_error_unknown": "An error occurred. Please try again later.",
+    "message_error_title": "Error"
   },
   "ForgotPassword": {
     "title": "Reset Password",
@@ -58,6 +61,7 @@
     "reset_password_button": "Reset Password",
     "message_success": "Check your email for a link to reset your password.",
     "message_error_unknown": "Could not reset password",
+    "message_error_title": "Error",
     "message_error_email_required": "Email is required"
   },
   "ResetPassword": {
@@ -69,6 +73,7 @@
     "confirm_password_field_placeholder": "Confirm password",
     "reset_password_button_label": "Reset password",
     "message_error_unknown": "Could not reset password",
+    "message_error_title": "Error",
     "message_error_missing_required_fields": "Password and confirm password are required",
     "message_error_confirm_password": "Passwords do not match",
     "message_error_same_password": "Password is the same as the current password. Please choose another one.",

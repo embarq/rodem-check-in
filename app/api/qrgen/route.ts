@@ -4,6 +4,8 @@ import * as qrcode from 'qrcode'
 import { generateHMAC } from '@/lib/crypto'
 import { dayjs } from '@/lib/utils'
 
+const qrCacheExpiration = 60 * 60 * 23 // 23 hours
+
 export async function GET(request: NextRequest) {
   assert.ok(process.env.QR_SECRET)
   assert.ok(process.env.QR_KEY_SIG)
@@ -37,7 +39,7 @@ export async function GET(request: NextRequest) {
     return new NextResponse(await file.arrayBuffer(), {
       headers: {
         'Content-Type': 'image/svg+xml',
-        'Cache-Control': 'public, max-age=31536000',
+        'Cache-Control': `public, max-age=${qrCacheExpiration}`,
       },
     })
   } catch (error) {

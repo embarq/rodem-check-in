@@ -3,6 +3,7 @@
 import { isPointInPolygon } from 'geolib'
 import * as config from '@/lib/config'
 import { attendanceTableName, profilesTableName } from '@/lib/db'
+import { actionResult } from '@/lib/model'
 import { dayjs } from '@/lib/utils'
 import { createClient } from '@/utils/supabase/server'
 import { encodedRedirect } from '@/utils/utils'
@@ -17,17 +18,13 @@ export const checkInAction = async ({
   const userCoords = { latitude, longitude }
 
   if (!userCoords) {
-    return encodedRedirect(
-      'error',
-      '/member/check-in',
-      'message_error_missing_geolocation_data',
-    )
+    return actionResult(false, 'message_error_missing_geolocation_data')
   }
 
   if (config.checkInTargetGeolocation == null) {
     console.error(new Error('Target geolocation is not set'))
 
-    return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
+    return actionResult(false, 'message_error_unknown')
   }
 
   const target = config.checkInTargetGeolocation
@@ -38,12 +35,8 @@ export const checkInAction = async ({
     target.w,
   ])
 
-  if (isWithinBounds) {
-    return encodedRedirect(
-      'error',
-      '/member/check-in',
-      'message_error_too_far_from_the_target',
-    )
+  if (!isWithinBounds) {
+    return actionResult(false, 'message_error_too_far_from_the_target')
   }
 
   const baseTs = dayjs().utc().set('s', 0).set('ms', 0)
@@ -54,11 +47,7 @@ export const checkInAction = async ({
   } = await supabase.auth.getUser()
 
   if (!user) {
-    return encodedRedirect(
-      'error',
-      '/member/check-in',
-      'message_error_missing_user_data',
-    )
+    return actionResult(false, 'message_error_missing_user_data')
   }
 
   const { data: profile } = await supabase
@@ -79,15 +68,11 @@ export const checkInAction = async ({
 
   if (records.error) {
     console.error({ ...records.error, src: 'checkInAction/recordsQuery' })
-    return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
+    return actionResult(false, 'message_error_unknown')
   }
 
   if (records.count! > 0) {
-    return encodedRedirect(
-      'error',
-      '/member/check-in',
-      'message_error_already_checked_in',
-    )
+    return actionResult(false, 'message_error_already_checked_in')
   }
 
   const { error } = await supabase.from(attendanceTableName).insert({
@@ -97,9 +82,9 @@ export const checkInAction = async ({
 
   if (error) {
     console.error({ ...error, src: 'checkInAction/attendanceQuery' })
-    return encodedRedirect('error', '/member/check-in', 'message_error_unknown')
+    return actionResult(false, 'message_error_unknown')
   }
 
-  return encodedRedirect('success', '/member/check-in', 'message_success')
+  return actionResult(true, 'message_success')
 }
 

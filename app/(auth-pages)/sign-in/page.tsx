@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { CommonLayout } from '@/app/(auth-pages)/common-layout'
-import { signInAction } from '@/app/actions'
 import { FormMessage } from '@/components/form-message'
-import { SubmitButton } from '@/components/submit-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { FormActionMessage } from '@/lib/model'
 import { maybeTranslateFormMessage, parseRedirectConfig } from '@/lib/utils'
+import { SignInFormControls } from './form-controls'
 
 export default async function Login(props: {
   searchParams: Promise<FormActionMessage & { redirect_conf: string }>
@@ -18,10 +17,6 @@ export default async function Login(props: {
   const redirectConfig = redirect_conf
     ? parseRedirectConfig(redirect_conf)
     : void 0
-  const formAction = async (formData: FormData) => {
-    'use server'
-    await signInAction(formData, redirectConfig)
-  }
 
   return (
     <CommonLayout
@@ -65,12 +60,7 @@ export default async function Login(props: {
         placeholder={t('password_field_placeholder')}
         required
       />
-      <SubmitButton
-        pendingText={t('sign_in_button_loading')}
-        formAction={formAction}
-      >
-        {t('sign_in_button')}
-      </SubmitButton>
+      <SignInFormControls redirectConfig={redirectConfig} />
       <FormMessage message={formMessage} />
     </CommonLayout>
   )

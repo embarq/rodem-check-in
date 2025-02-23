@@ -3,6 +3,7 @@
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { completeSignUp } from '@/lib/auth'
+import { actionResult, validateActionResultMessage } from '@/lib/model'
 import { RedirectConfig } from '@/lib/types'
 import { createClient } from '@/utils/supabase/server'
 import { encodedRedirect, redirectWithConfig } from '@/utils/utils'
@@ -19,7 +20,7 @@ export const signUpAction = async (
   const origin = (await headers()).get('origin')
 
   if (!phone || !password) {
-    return encodedRedirect('error', '/sign-up', 'message_error_required_login')
+    return actionResult(false, 'message_error_required_login')
   }
 
   const { error, data } = await supabase.auth.signUp({
@@ -42,16 +43,21 @@ export const signUpAction = async (
       'weak_password',
       'validation_failed',
       'phone_exists',
+      'user_already_exists',
     ].includes(error.code!)
       ? 'message_error_' + error.code
       : 'message_error_unknown'
-    return encodedRedirect('error', '/sign-up', message)
+
+    validateActionResultMessage(message)
+
+    return actionResult(false, message)
   } else {
     await completeSignUp({ user_id: data.user!.id, name, email, phone })
 
     if (typeof redirectConfig === 'object') {
       return redirectWithConfig(redirectConfig)
     }
+
     return redirect('/sign-up-success')
   }
 }
@@ -71,9 +77,13 @@ export const signInAction = async (
 
   if (error) {
     if ('code' in error) {
-      return encodedRedirect('error', '/sign-in', 'message_error_' + error.code)
+      const message = 'message_error_' + error.code
+
+      validateActionResultMessage(message)
+
+      return actionResult(false, message)
     }
-    return encodedRedirect('error', '/sign-in', 'message_error_unknown')
+    return actionResult(false, 'message_error_unknown')
   }
 
   if (redirectConfig) {

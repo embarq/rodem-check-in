@@ -1,31 +1,48 @@
 'use client'
 
+import { useState } from 'react'
 import classNames from 'classnames'
+import { CloudOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { checkInAction } from '@/app/member/check-in/actions'
 import { SubmitButton } from '@/components/submit-button'
+import { Toast } from '@/components/toast'
 import { useGeolocation } from '@/lib/geolocation'
+import { AppActionResult } from '@/lib/model'
+import { cn } from '@/lib/utils'
 
 interface Props {
   className?: string
+  disabled?: boolean
 }
 
 export const CheckInForm: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   className,
+  disabled = true,
 }) => {
   const t = useTranslations('CheckIn')
   const { requestLocation } = useGeolocation()
+  const [actionResult, setActionResult] = useState<AppActionResult | null>(null)
 
   const handleSubmit = async () => {
     try {
-      const result = await requestLocation()
+      const geolocation = await requestLocation()
 
-      if (result == null) {
+      if (geolocation == null) {
         throw new Error('message_error_unknown')
       }
 
-      await checkInAction(result)
+      console.log({ geolocation })
+
+      if (actionResult != null) {
+        setActionResult(null)
+        return
+      }
+
+      const res = await checkInAction(geolocation)
+
+      setActionResult(res)
     } catch (error) {
       console.error(error)
     }
@@ -37,11 +54,28 @@ export const CheckInForm: React.FC<React.PropsWithChildren<Props>> = ({
       onSubmit={e => e.preventDefault()}
     >
       <SubmitButton
+        disabled={disabled}
         onClick={handleSubmit}
         pendingText={t('submit_button_loading')}
       >
         {t('submit_button')}
       </SubmitButton>
+      <Toast
+        title={
+          !actionResult?.success && (
+            <p className="flex items-center gap-x-2 text-destructive">
+              <CloudOff size={18} />
+              {t('message_error_title')}
+            </p>
+          )
+        }
+        description={actionResult?.message && t(actionResult.message)}
+        isOpen={actionResult != null}
+        onChange={isOpen => !isOpen && setActionResult(null)}
+        className={cn({
+          'border-b-4 border-b-destructive': !actionResult?.success,
+        })}
+      />
       {children}
     </form>
   )
