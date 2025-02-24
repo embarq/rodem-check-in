@@ -18,13 +18,85 @@
   "SignIn": {
     "title": "Sign in",
     "email_field_label": "Email",
+    "username_field_label": "Phone",
+    "username_field_placeholder": "+82 010 0000 0000",
     "password_field_label": "Password",
     "password_field_placeholder": "Your password",
     "forgot_password_link": "Forgot Password?",
     "sign_in_button": "Sign in",
     "sign_up_hint": "Don't have an account",
     "sign_in_button_loading": "Signing In...",
-    "sign_up_link": "Sign up"
+    "sign_up_link": "Sign up",
+    "message_error_invalid_credentials": "유효하지 않은 로그인 자격 증명",
+    "message_error_validation_failed": "유효하지 않은 로그인 자격 증명",
+    "message_error_unknown": "오류가 발생했습니다. 나중에 다시 시도해 주세요.",
+    "message_error_title": "에러"
+  },
+  "SignUp": {
+    "title": "가입하기",
+    "existing_account": "이미 계정이 있나요?",
+    "sign_in_button": "로그인",
+    "name_field_label": "이름",
+    "email_field_label": "이메일",
+    "phone_field_label": "전화번호",
+    "phone_field_placeholder": "+82 010 0000 0000",
+    "password_field_label": "Password",
+    "password_field_placeholder": "Your password",
+    "sign_up_button": "Sign up",
+    "sign_up_button_loading": "Signing up...",
+    "message_success": "Thanks for signing up! Please check your email for a verification link.",
+    "message_error_required_login": "Phone number and password are required.",
+    "message_error_weak_password": "Password is too weak. Please include at least one word character and at least one numeric. The password should be at least 8 characters.",
+    "message_error_validation_failed": "Invalid phone number format",
+    "message_error_phone_exists": "The phone number is already in use",
+    "message_error_user_already_exists": "The login info is already in use",
+    "message_error_unknown": "An error occurred. Please try again later.",
+    "message_error_title": "Error"
+  },
+  "ForgotPassword": {
+    "title": "Reset Password",
+    "sign_in_hint": "Already have an account?",
+    "sign_in_link": "Sign in",
+    "email_field_label": "Email",
+    "reset_password_button": "Reset Password",
+    "message_success": "Check your email for a link to reset your password.",
+    "message_error_unknown": "Could not reset password",
+    "message_error_title": "Error",
+    "message_error_email_required": "Email is required"
+  },
+  "ResetPassword": {
+    "title": "title",
+    "description": "Please enter your new password below.",
+    "new_password_field_label": "New password",
+    "new_password_field_placeholder": "New password",
+    "confirm_password_field_label": "Confirm password",
+    "confirm_password_field_placeholder": "Confirm password",
+    "reset_password_button_label": "Reset password",
+    "message_error_unknown": "Could not reset password",
+    "message_error_title": "Error",
+    "message_error_missing_required_fields": "Password and confirm password are required",
+    "message_error_confirm_password": "Passwords do not match",
+    "message_error_same_password": "Password is the same as the current password. Please choose another one.",
+    "message_success": "Password updated"
+  },
+  "CheckIn": {
+    "title": "Check in",
+    "submit_button": "Check in",
+    "submit_button_loading": "Loading...",
+    "message_error_already_checked_in": "Check in failed: looks like you've already checked in",
+    "message_error_missing_user_data": "User not found",
+    "message_error_geolocation_not_supported": "Geolocation is not supported",
+    "message_error_missing_geolocation_data": "Geolocation data not found",
+    "message_error_location_permission_denied": "Location permission denied",
+    "message_error_too_far_from_the_target": "Too far from the target",
+    "message_error_malformed_url": "The URL that's being used is malformed",
+    "message_error_unknown": "An error occurred. Please try again later.",
+    "message_error_title": "Check in failed",
+    "message_success": "Submission successful"
+  },
+  "SignUpSuccess": {
+    "title": "Thanks for signing up!",
+    "description": "Now you can go ahead and open your camera app, scan the QR code, and follow onscreen instructions."
   }
 }
 
