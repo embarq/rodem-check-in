@@ -8,15 +8,19 @@
     }
   },
   "LocaleSwitcher": {
-    "label": "Language",
+    "label": "Язык",
     "options": {
       "kr": "한국어",
       "en": "English",
       "ru": "Русский"
     }
   },
+  "Header": {
+    "sign_in_link": "Вход",
+    "sign_out_link": "Выход"
+  },
   "SignIn": {
-    "title": "Войти в аккаунт",
+    "title": "Вход в аккаунт",
     "email_field_label": "Эл. почта",
     "username_field_label": "Телефон",
     "username_field_placeholder": "+82 010 0000 0000",
@@ -33,10 +37,10 @@
     "message_error_title": "Error"
   },
   "SignUp": {
-    "title": "Зарегистрироваться",
+    "title": "Регистрация",
     "existing_account": "Уже зарегистрированы?",
     "sign_in_button": "Войти",
-    "name_field_label": "Наименование",
+    "name_field_label": "Имя",
     "email_field_label": "Эл. почта",
     "phone_field_label": "Телефон",
     "phone_field_placeholder": "+82 010 0000 0000",
@@ -80,19 +84,19 @@
     "message_success": "Пароль обновлен"
   },
   "CheckIn": {
-    "title": "Проверить",
-    "submit_button": "Проверить",
+    "title": "Отметиться",
+    "submit_button": "Отметиться",
     "submit_button_loading": "Загрузка...",
-    "message_error_already_checked_in": "Проверка не удалась: похоже, что вы уже зарегистрированы",
-    "message_error_missing_user_data": "Пользователь не найден",
+    "message_error_already_checked_in": "Отметка не удалась: похоже, что вы уже отмечались сегодня",
+    "message_error_missing_user_data": "Данные пользователя не найдены",
     "message_error_geolocation_not_supported": "Геолокация не поддерживается",
     "message_error_missing_geolocation_data": "Данные геолокации не найдены",
     "message_error_location_permission_denied": "Доступ к местоположению запрещён",
     "message_error_too_far_from_the_target": "Слишком далеко от цели",
-    "message_error_malformed_url": "Используемый URL является неправильным",
+    "message_error_malformed_url": "Ошибка сканирования qr-кода: неправельный URL",
     "message_error_unknown": "Произошла ошибка. Пожалуйста, повторите попытку позже.",
-    "message_error_title": "Проверка не удалась",
-    "message_success": "Успешная сдача"
+    "message_error_title": "Ошибка",
+    "message_success": "Данные отправлены успешно"
   },
   "SignUpSuccess": {
     "title": "Спасибо за регистрацию!",
