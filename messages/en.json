@@ -15,6 +15,10 @@
       "ru": "Русский"
     }
   },
+  "Header": {
+    "sign_in_link": "Sign in",
+    "sign_out_link": "Sign out"
+  },
   "SignIn": {
     "title": "Sign in",
     "email_field_label": "Email",
