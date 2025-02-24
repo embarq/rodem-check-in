@@ -5,6 +5,17 @@
     "Rodem",
     "supabase"
   ],
+  "cSpell.ignorePaths": [
+    "package-lock.json",
+    "node_modules",
+    "vscode-extension",
+    ".git/{info,lfs,logs,refs,objects}/**",
+    ".git/{index,*refs,*HEAD}",
+    ".vscode",
+    ".vscode-insiders",
+    "messages/*.json",
+    "!messages/en.json",
+  ],
   "editor.inlayHints.enabled": "offUnlessPressed",
   "typescript.inlayHints.parameterTypes.enabled": true,
   "typescript.inlayHints.parameterNames.enabled": "all",

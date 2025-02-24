@@ -33,7 +33,7 @@ export const Toast: React.FC<Props> = ({
           <button
             type="button"
             onClick={() => onChange && onChange(false)}
-            className="text-card"
+            className="dark:text-card"
           >
             <XIcon />
           </button>
@@ -42,7 +42,7 @@ export const Toast: React.FC<Props> = ({
       {description && (
         <Description
           asChild={typeof description !== 'string'}
-          className="text-sm text-card"
+          className="text-sm dark:text-card"
         >
           {description}
         </Description>
