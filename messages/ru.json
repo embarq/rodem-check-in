@@ -8,7 +8,7 @@
     }
   },
   "LocaleSwitcher": {
-    "label": "Язык",
+    "label": "Language",
     "options": {
       "kr": "한국어",
       "en": "English",
@@ -20,7 +20,7 @@
     "sign_out_link": "Выход"
   },
   "SignIn": {
-    "title": "Вход в аккаунт",
+    "title": "Войти в аккаунт",
     "email_field_label": "Эл. почта",
     "username_field_label": "Телефон",
     "username_field_placeholder": "+82 010 0000 0000",
@@ -34,13 +34,13 @@
     "message_error_invalid_credentials": "Неверные учетные данные",
     "message_error_validation_failed": "Неверные учетные данные",
     "message_error_unknown": "Произошла ошибка. Пожалуйста, повторите попытку позже.",
-    "message_error_title": "Error"
+    "message_error_title": "Ошибка"
   },
   "SignUp": {
-    "title": "Регистрация",
+    "title": "Зарегистрироваться",
     "existing_account": "Уже зарегистрированы?",
     "sign_in_button": "Войти",
-    "name_field_label": "Имя",
+    "name_field_label": "Наименование",
     "email_field_label": "Эл. почта",
     "phone_field_label": "Телефон",
     "phone_field_placeholder": "+82 010 0000 0000",
@@ -77,25 +77,25 @@
     "confirm_password_field_placeholder": "Подтвердите пароль",
     "reset_password_button_label": "Сброс пароля",
     "message_error_unknown": "Не удалось сбросить пароль",
-    "message_error_title": "Error",
+    "message_error_title": "Ошибка",
     "message_error_missing_required_fields": "Требуется пароль и подтверждение пароля",
     "message_error_confirm_password": "Пароли не совпадают",
     "message_error_same_password": "Пароль совпадает с текущим паролем. Пожалуйста, выберите другой.",
-    "message_success": "Пароль обновлен"
+    "message_success": "Пароль обновлён"
   },
   "CheckIn": {
-    "title": "Отметиться",
+    "title": "Отметки",
     "submit_button": "Отметиться",
     "submit_button_loading": "Загрузка...",
     "message_error_already_checked_in": "Отметка не удалась: похоже, что вы уже отмечались сегодня",
     "message_error_missing_user_data": "Данные пользователя не найдены",
     "message_error_geolocation_not_supported": "Геолокация не поддерживается",
     "message_error_missing_geolocation_data": "Данные геолокации не найдены",
-    "message_error_location_permission_denied": "Доступ к местоположению запрещён",
-    "message_error_too_far_from_the_target": "Слишком далеко от цели",
-    "message_error_malformed_url": "Ошибка сканирования qr-кода: неправельный URL",
+    "message_error_location_permission_denied": "Доступ к данным о местоположении запрещён",
+    "message_error_too_far_from_the_target": "Вне зоны школы",
+    "message_error_malformed_url": "Ошибка чтения qr-кода: неправильная ссылка",
     "message_error_unknown": "Произошла ошибка. Пожалуйста, повторите попытку позже.",
-    "message_error_title": "Ошибка",
+    "message_error_title": "Отметка не удалась",
     "message_success": "Данные отправлены успешно"
   },
   "SignUpSuccess": {
