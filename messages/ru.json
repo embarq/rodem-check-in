@@ -46,12 +46,12 @@
     "sign_up_button_loading": "Регистрация...",
     "message_success": "Спасибо за регистрацию! Пожалуйста, проверьте вашу электронную почту для верификации.",
     "message_error_required_login": "Требуется указать номер телефона и пароль.",
-    "message_error_weak_password": "Password is too weak. Please include at least one word character and at least one numeric. The password should be at least 8 characters.",
+    "message_error_weak_password": "Пароль слишком слабый. Пожалуйста, используйте по крайней мере один символ и по крайней мере одно число. Пароль должен быть не менее 8 символов.",
     "message_error_validation_failed": "Неверный формат номера телефона",
     "message_error_phone_exists": "Номер телефона уже используется",
-    "message_error_user_already_exists": "The login info is already in use",
+    "message_error_user_already_exists": "Данные для входа уже используются другим пользователем",
     "message_error_unknown": "Произошла ошибка. Пожалуйста, повторите попытку позже.",
-    "message_error_title": "Error"
+    "message_error_title": "Ошибка"
   },
   "ForgotPassword": {
     "title": "Сбросить пароль",
@@ -61,7 +61,7 @@
     "reset_password_button": "Сбросить пароль",
     "message_success": "Проверьте свою электронную почту для сброса пароля.",
     "message_error_unknown": "Не удалось сбросить пароль",
-    "message_error_title": "Error",
+    "message_error_title": "Ошибка",
     "message_error_email_required": "Требуется адрес электронной почты"
   },
   "ResetPassword": {
@@ -96,7 +96,7 @@
   },
   "SignUpSuccess": {
     "title": "Спасибо за регистрацию!",
-    "description": "Теперь вы можете открывать камеру, сканировать QR-код и следовать инструкциям на экране."
+    "description": "Теперь вы можете запустить камеру, сканировать QR-код и следовать инструкциям на экране."
   }
 }
 
