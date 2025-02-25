@@ -51,5 +51,5 @@
     "typescript": "5.7.2",
     "vercel": "^41.0.2"
   },
-  "version": "0.3.6"
+  "version": "0.3.7"
 }
