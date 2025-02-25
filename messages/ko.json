@@ -3,100 +3,104 @@
     "label": "Theme",
     "options": {
       "light": "Light",
-      "dark": "Dark",
-      "system": "System"
+      "dark": "어두움",
+      "system": "설정"
     }
   },
   "LocaleSwitcher": {
     "label": "Language",
     "options": {
       "kr": "한국어",
-      "en": "English",
-      "ru": "Русский"
+      "en": "영어",
+      "ru": "러시아어"
     }
   },
+  "Header": {
+    "sign_in_link": "로그인",
+    "sign_out_link": "로그아웃"
+  },
   "SignIn": {
-    "title": "Sign in",
+    "title": "계정으로 로그인",
     "email_field_label": "Email",
     "username_field_label": "Phone",
     "username_field_placeholder": "+82 010 0000 0000",
-    "password_field_label": "Password",
-    "password_field_placeholder": "Your password",
-    "forgot_password_link": "Forgot Password?",
+    "password_field_label": "비밀번호",
+    "password_field_placeholder": "비밀 번호",
+    "forgot_password_link": "비밀번호 잊어버렸습니까?",
     "sign_in_button": "Sign in",
-    "sign_up_hint": "Don't have an account",
+    "sign_up_hint": "계정 없으십니까?",
     "sign_in_button_loading": "Signing In...",
-    "sign_up_link": "Sign up",
-    "message_error_invalid_credentials": "유효하지 않은 로그인 자격 증명",
-    "message_error_validation_failed": "유효하지 않은 로그인 자격 증명",
-    "message_error_unknown": "오류가 발생했습니다. 나중에 다시 시도해 주세요.",
-    "message_error_title": "에러"
+    "sign_up_link": "회원가입",
+    "message_error_invalid_credentials": "계정 정보 오류",
+    "message_error_validation_failed": "계정 정보 오류",
+    "message_error_unknown": "오류가 발생했습니다. 나중에 다시 시도해 주십시오.",
+    "message_error_title": "오류"
   },
   "SignUp": {
-    "title": "가입하기",
-    "existing_account": "이미 계정이 있나요?",
+    "title": "회원가입",
+    "existing_account": "계정이 이미 있으십니까?",
     "sign_in_button": "로그인",
     "name_field_label": "이름",
     "email_field_label": "이메일",
     "phone_field_label": "전화번호",
     "phone_field_placeholder": "+82 010 0000 0000",
     "password_field_label": "Password",
-    "password_field_placeholder": "Your password",
-    "sign_up_button": "Sign up",
-    "sign_up_button_loading": "Signing up...",
-    "message_success": "Thanks for signing up! Please check your email for a verification link.",
-    "message_error_required_login": "Phone number and password are required.",
-    "message_error_weak_password": "Password is too weak. Please include at least one word character and at least one numeric. The password should be at least 8 characters.",
-    "message_error_validation_failed": "Invalid phone number format",
-    "message_error_phone_exists": "The phone number is already in use",
-    "message_error_user_already_exists": "The login info is already in use",
-    "message_error_unknown": "An error occurred. Please try again later.",
-    "message_error_title": "Error"
+    "password_field_placeholder": "당신의 비밀번호",
+    "sign_up_button": "회원가입",
+    "sign_up_button_loading": "회원가입 중...",
+    "message_success": "회원가입을 해주셔서 감사합니다! 인증 링크를 입력하신 이메일에 확인해주시기 바랍니다.",
+    "message_error_required_login": "전화번호와 비밀번호를 입력해주십시오.",
+    "message_error_weak_password": "비밀번호가 너무 약합니다. 비밀번호는 특수문자와 숫자 최소 1개를 포합해야 합니다. 비밀번호는 8자 이상이어야 합니다.",
+    "message_error_validation_failed": "전화번호 형식 오류",
+    "message_error_phone_exists": "이미 등록된 전화번호입니다.",
+    "message_error_user_already_exists": "로그인 정보가 이미 사용중입니다.",
+    "message_error_unknown": "오류가 발생했습니다. 나중에 다시 해보시기 바랍니다.",
+    "message_error_title": "오류"
   },
   "ForgotPassword": {
     "title": "Reset Password",
-    "sign_in_hint": "Already have an account?",
-    "sign_in_link": "Sign in",
+    "sign_in_hint": "계정이 이미 있으십니까?",
+    "sign_in_link": "계정으로 로그인",
     "email_field_label": "Email",
     "reset_password_button": "Reset Password",
-    "message_success": "Check your email for a link to reset your password.",
-    "message_error_unknown": "Could not reset password",
-    "message_error_title": "Error",
-    "message_error_email_required": "Email is required"
+    "message_success": "비밀번호 재설정 하려면 이메일을 확인하십시오.",
+    "message_error_unknown": "비밀번호 재설정 실패하였습니다",
+    "message_error_title": "오류",
+    "message_error_email_required": "이메일을 입력해야 합니다"
   },
   "ResetPassword": {
-    "title": "title",
-    "description": "Please enter your new password below.",
+    "title": "제목",
+    "description": "새로운 비밀번호 입력해주십시오.",
     "new_password_field_label": "New password",
     "new_password_field_placeholder": "New password",
-    "confirm_password_field_label": "Confirm password",
-    "confirm_password_field_placeholder": "Confirm password",
-    "reset_password_button_label": "Reset password",
-    "message_error_unknown": "Could not reset password",
-    "message_error_title": "Error",
-    "message_error_missing_required_fields": "Password and confirm password are required",
-    "message_error_confirm_password": "Passwords do not match",
-    "message_error_same_password": "Password is the same as the current password. Please choose another one.",
-    "message_success": "Password updated"
+    "confirm_password_field_label": "비밀번호를 확인해주십시오",
+    "confirm_password_field_placeholder": "비밀번호를 확인해주십시오",
+    "reset_password_button_label": "비밀번호 초기화",
+    "message_error_unknown": "비밀번호 재설정 실패하였습니다",
+    "message_error_title": "오류",
+    "message_error_missing_required_fields": "비밀번호 입력 및 비밀번호 확인이 필요합니다",
+    "message_error_confirm_password": "비밀번호가 일치하지 않습니다.",
+    "message_error_same_password": "현재 사용중인 비밀번호와 동일합니다. 다른 비밀번호를 입력하여주십시오.",
+    "message_success": "비밀번호 설정 완료"
   },
   "CheckIn": {
-    "title": "Check in",
-    "submit_button": "Check in",
-    "submit_button_loading": "Loading...",
-    "message_error_already_checked_in": "Check in failed: looks like you've already checked in",
-    "message_error_missing_user_data": "User not found",
-    "message_error_geolocation_not_supported": "Geolocation is not supported",
-    "message_error_missing_geolocation_data": "Geolocation data not found",
-    "message_error_location_permission_denied": "Location permission denied",
-    "message_error_too_far_from_the_target": "Too far from the target",
-    "message_error_malformed_url": "The URL that's being used is malformed",
-    "message_error_unknown": "An error occurred. Please try again later.",
-    "message_error_title": "Check in failed",
-    "message_success": "Submission successful"
+    "title": "출석 체크",
+    "submit_button": "출석 체크",
+    "submit_button_loading": "로딩...",
+    "message_error_already_checked_in": "출석 체크 실패 : 오늘 이미 출석 체크를 하셨나봅니다.",
+    "message_error_missing_user_data": "사용자를 찾을 수 없습니다",
+    "message_error_geolocation_not_supported": "위치가 지원되지 않습니다",
+    "message_error_missing_geolocation_data": "위치를 찾을 수 없습니다",
+    "message_error_location_permission_denied": "위치 권한이 거부되었습니다",
+    "message_error_too_far_from_the_target": "목적지와 너무 멀리 떨어져 있습니다",
+    "message_error_malformed_url": "QR코드 스캔 실패 : 사용중인 URL이 올바르지 않습니다",
+    "message_error_unknown": "오류가 발생하였습니다. 나중에 다시 해보시기 바랍니다.",
+    "message_error_title": "출석 체크 실패",
+    "message_success": "출석 체크 성공"
   },
   "SignUpSuccess": {
-    "title": "Thanks for signing up!",
-    "description": "Now you can go ahead and open your camera app, scan the QR code, and follow onscreen instructions."
+    "title": "가입해 주셔서 감사합니다!",
+    "description": "이제 카메라를 앱을 열고 QR코드를 스캔하셔서 화면에 나오는 안내에 따라하시면 됩니다."
   }
 }
 
