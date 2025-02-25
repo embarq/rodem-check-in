@@ -4,7 +4,7 @@ import * as qrcode from 'qrcode'
 import { generateHMAC } from '@/lib/crypto'
 import { dayjs } from '@/lib/utils'
 
-const qrCacheExpiration = 60 * 60 * 23 // 23 hours
+const qrCacheExpiration = 60 * 60 * 12 // 23 hours
 
 export async function GET(request: NextRequest) {
   assert.ok(process.env.QR_SECRET)

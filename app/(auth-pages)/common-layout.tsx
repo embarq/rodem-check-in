@@ -1,5 +1,7 @@
+import Image from 'next/image'
 import { Slot } from '@radix-ui/react-slot'
 import classNames from 'classnames'
+import Logo from '@/assets/logo-lg.PNG'
 
 interface Props {
   className?: string
@@ -22,16 +24,18 @@ export const CommonLayout: React.FC<React.PropsWithChildren<Props>> = ({
   const DynamicChild = asChild ? Slot : 'form'
 
   return (
-    <section
-      className={classNames(
-        'flex min-w-72 flex-1 flex-col space-y-6',
-        className,
-      )}
-    >
-      <h1 className="text-2xl font-semibold">{title}</h1>
-      <p className="text-sm text-foreground">{description}</p>
+    <section className={classNames('flex min-w-72 flex-1 flex-col', className)}>
+      <Image
+        src={Logo}
+        alt="Logo"
+        width={140}
+        height={140}
+        className="-translate-x-6"
+      />
+      <h1 className="mt-3 text-2xl font-semibold">{title}</h1>
+      <p className="mt-6 text-sm text-foreground">{description}</p>
       <DynamicChild
-        className="flex flex-col gap-2 [&>input]:mb-3"
+        className="mt-6 flex flex-col gap-2 [&>input]:mb-3"
         {...childProps}
       >
         {children}
@@ -39,3 +43,4 @@ export const CommonLayout: React.FC<React.PropsWithChildren<Props>> = ({
     </section>
   )
 }
+

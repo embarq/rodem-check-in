@@ -23,18 +23,6 @@ export async function GET(request: Request) {
       console.error(new Error('Missing user data'))
       return NextResponse.redirect(`${origin}/sign-up`)
     }
-
-    try {
-      const { error } = await completeSignUp({
-        user_id: res.data.user.id,
-        name: res.data.user.user_metadata.name,
-      })
-      if (error) {
-        throw new Error(error.message)
-      }
-    } catch (error) {
-      console.error(error)
-    }
   }
 
   if (redirectConfigRaw) {

@@ -2,20 +2,26 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
+import assert from 'assert'
 import { completeSignUp } from '@/lib/auth'
-import { actionResult, validateActionResultMessage } from '@/lib/model'
+import {
+  UserProfile,
+  actionResult,
+  validateActionResultMessage,
+} from '@/lib/model'
 import { RedirectConfig } from '@/lib/types'
 import { createClient } from '@/utils/supabase/server'
 import { encodedRedirect, redirectWithConfig } from '@/utils/utils'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 export const signUpAction = async (
   formData: FormData,
   redirectConfig?: string | RedirectConfig,
 ) => {
-  const email = formData.get('email')?.toString()!
   const password = formData.get('password')?.toString()!
   const name = formData.get('name')?.toString()!
   const phone = formData.get('phone')?.toString()!
+  const email = formData.get('email')?.toString()! ?? getDefaultEmail(phone)
   const supabase = await createClient()
   const origin = (await headers()).get('origin')
 
@@ -52,7 +58,17 @@ export const signUpAction = async (
 
     return actionResult(false, message)
   } else {
-    await completeSignUp({ user_id: data.user!.id, name, email, phone })
+    await postSignUp({
+      origin,
+      redirectConfig,
+      supabase,
+      user: {
+        name,
+        email,
+        phone,
+        user_id: data?.user?.id as string,
+      },
+    }).catch(console.error)
 
     if (typeof redirectConfig === 'object') {
       return redirectWithConfig(redirectConfig)
@@ -60,6 +76,57 @@ export const signUpAction = async (
 
     return redirect('/sign-up-success')
   }
+}
+
+/**
+ * Sets up the user's profile after sign up.
+ * Update the user's email and manage the email change redirect URL.
+ */
+async function postSignUp({
+  supabase,
+  origin,
+  redirectConfig,
+  user,
+}: {
+  supabase: SupabaseClient
+  origin: string | null
+  redirectConfig?: string | RedirectConfig
+  user: Pick<UserProfile, 'user_id'> & Partial<UserProfile>
+}): Promise<void> {
+  const emailCallbackUrl = new URL(origin!)
+  emailCallbackUrl.pathname = '/auth/callback'
+  emailCallbackUrl.searchParams.set('redirect_to', '/member/check-in')
+
+  if (redirectConfig != null) {
+    const _redirectConfig =
+      typeof redirectConfig === 'string'
+        ? redirectConfig
+        : Buffer.from(JSON.stringify(redirectConfig)).toString('base64')
+
+    emailCallbackUrl.searchParams.set('redirect_conf', _redirectConfig)
+  }
+
+  const results = await Promise.allSettled([
+    completeSignUp(user),
+    supabase.auth.updateUser(
+      { email: user.email },
+      {
+        emailRedirectTo: emailCallbackUrl.toString(),
+      },
+    ),
+  ])
+  const reject = results.find(result => result.status === 'rejected')
+
+  reject?.reason && console.error(reject.reason)
+}
+
+function getDefaultEmail(substr: string): string {
+  assert(process.env.SUPABASE_AUTH_DEFAULT_EMAIL)
+
+  const baseEmail = process.env.SUPABASE_AUTH_DEFAULT_EMAIL
+  const [id, domain] = baseEmail?.split('@')
+
+  return [id, '+', substr, '@', domain].join('')
 }
 
 export const signInAction = async (
