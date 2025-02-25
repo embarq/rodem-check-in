@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import { Slot } from '@radix-ui/react-slot'
 import classNames from 'classnames'
-import Logo from '../../assets/logo-lg.png'
 
 interface Props {
   className?: string
@@ -26,11 +25,11 @@ export const CommonLayout: React.FC<React.PropsWithChildren<Props>> = ({
   return (
     <section className={classNames('flex min-w-72 flex-1 flex-col', className)}>
       <Image
-        src={Logo}
+        src="/logo-lg.png"
         alt="Logo"
-        width={140}
-        height={140}
-        className="-translate-x-6"
+        width={144}
+        height={144}
+        className="-translate-x-6 min-h-[162px]"
       />
       <h1 className="mt-3 text-2xl font-semibold">{title}</h1>
       <p className="mt-6 text-sm text-foreground">{description}</p>
