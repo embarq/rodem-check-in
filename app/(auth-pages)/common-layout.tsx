@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Slot } from '@radix-ui/react-slot'
 import classNames from 'classnames'
-import Logo from '@/assets/logo-lg.PNG'
+import Logo from '@/assets/logo-lg.png'
 
 interface Props {
   className?: string
