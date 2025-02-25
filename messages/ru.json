@@ -4,14 +4,14 @@
     "options": {
       "light": "Light",
       "dark": "Dark",
-      "system": "System"
+      "system": "Настройки"
     }
   },
   "LocaleSwitcher": {
     "label": "Язык",
     "options": {
-      "kr": "한국어",
-      "en": "English",
+      "kr": "Корейский",
+      "en": "Английский",
       "ru": "Русский"
     }
   },
@@ -69,7 +69,7 @@
     "message_error_email_required": "Требуется адрес электронной почты"
   },
   "ResetPassword": {
-    "title": "название",
+    "title": "Название",
     "description": "Пожалуйста, введите ваш новый пароль.",
     "new_password_field_label": "Новый пароль",
     "new_password_field_placeholder": "Новый пароль",
