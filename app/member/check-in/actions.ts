@@ -28,12 +28,13 @@ export const checkInAction = async ({
   }
 
   const target = config.checkInTargetGeolocation
-  const isWithinBounds = isPointInPolygon(userCoords, [
-    target.n,
-    target.e,
-    target.s,
-    target.w,
-  ])
+  const isWithinBounds = isPointInPolygon(
+    userCoords,
+    [target.n, target.e, target.s, target.w].map(([lat, lon]) => ({
+      latitude: lat,
+      longitude: lon,
+    })),
+  )
 
   if (!isWithinBounds) {
     return actionResult(false, 'message_error_too_far_from_the_target')
